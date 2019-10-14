@@ -1,0 +1,4 @@
+SELECT * FROM `p_operator` WHERE `pembeliankategori_id` = 2 AND `product_name` LIKE '%axis%' and prefix like '%08%' 
+
+
+SELECT * FROM `p_operator` WHERE `pembeliankategori_id` = 2 AND `product_name` LIKE '%axis%' and prefix like '%08%' 

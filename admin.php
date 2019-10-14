@@ -24,7 +24,7 @@ require_once("_/_session_level_1.php");
                     <?PHP require_once("_/_alert_message.php"); ?>
 					<section class="card card-blue mb-3">
 						<header class="card-header">
-							Daftar Admin (Internal Bukakios)
+							Daftar Admin (Internal Bukakios) 
 						</header>
                         
 						<div class="card-block">

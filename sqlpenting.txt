@@ -1,0 +1,41 @@
+SELECT *
+FROM table
+WHERE year(entrytime) = 2017
+
+
+SELECT * FROM tbl_total_minus_not_match
+WHERE LEFT(tanggal_matching, 7) = LEFT('2019-07', 7)
+
+SELECT id FROM tbl_total_minus_not_match
+   WHERE MONTH(tanggal_matching) = 10 AND YEAR(tanggal_matching) = 2019
+
+SELECT * FROM `tbl_total_minus_not_match` WHERE DATE(tanggal_matching) = '2019-10-05'
+
+SELECT * FROM `tbl_import_h2h` where tgl_transaksi like '01/11/2019%'
+
+ "SELECT * FROM 'tbl_import_h2h' where tmp_kd_produk='STP10' && tmp_no_tujuan='082177225103' && tgl_transaksi like '01/10/2019%'";
+
+ SELECT provinsi, COUNT(`provinsi`) FROM `verify_id` WHERE `status`=1 group by provinsi
+
+ SELECT count(total_minus), `tanggal_matching` FROM `tbl_total_minus_not_match` WHERE DATE(tanggal_matching) = '2019-06-06' group by `tanggal_matching`
+
+SELECT MONTH(`created_at`) AS bulan, COUNT(*) AS jumlah_bulanan
+FROM transaksi
+GROUP BY MONTH(`created_at`);
+
+SELECT MONTH(`created_at`) AS bulan, YEAR(`created_at`) as tahun, COUNT(*) AS jumlah_bulanan
+FROM transaksi
+where YEAR(`created_at`) = 2019
+GROUP BY MONTH(`created_at`), YEAR(`created_at`);
+
+
+SELECT DATE(`created_at`) AS tanggal, YEAR(`created_at`) as tahun, COUNT(*) AS jumlah_tgl
+FROM transaksi
+where YEAR(`created_at`) = 2019 && MONTH(`created_at`) = 01
+GROUP BY DATE(`created_at`), YEAR(`created_at`);
+
+
+SELECT DATE(`tgl_transaksi`) AS tanggal, COUNT(*) AS not_match
+FROM tbl_not_match
+where DATE(`tgl_transaksi`) = '2019-10-10'
+GROUP BY DATE(`tgl_transaksi`)

@@ -1,0 +1,104 @@
+  <?php 
+                                            $sql = "SELECT * FROM verify_id where status = '1'";
+                                            $data = $db->fetch_multiple($sql);
+                                            
+
+
+                                            $no = 1;
+                                            $data_provinsi = file_get_contents("http://dev.farizdotid.com/api/daerahindonesia/provinsi");
+                                            $data_provinsi = json_decode($data_provinsi,true);
+
+
+                                            foreach ($data as $row)
+                                            {
+                                                ?>
+                                                <tr>
+                                                    <td><?= $no++ ?></td>
+                                                    <td><?= $row['id'] ?></td>
+                                                <?php
+                                                if(!$data_provinsi['error']){
+                                                    foreach($data_provinsi['semuaprovinsi'] as $provinsi){
+                                                        //data disimpan ke array juga
+                                                        // echo "<option value='$provinsi[id]'>$provinsi[nama]</option>";	
+                                                        if ($row['provinsi'] == $provinsi['id'])
+                                                        {
+                                                           $data_kab = file_get_contents("http://dev.farizdotid.com/api/daerahindonesia/provinsi/".$provinsi['id']."/kabupaten");
+                                                            $data_kab = json_decode($data_kab, true);
+                                                        ?>
+                                                            <td><?= $provinsi['nama'] ?></td>
+                                                        <?php
+                                                            foreach ($data_kab['kabupatens'] as $kabs)
+                                                            {
+                                                                if ($row['kabupaten'] == $kabs['id'])
+                                                                {
+                                                                    echo "<td>".$kabs['nama']."</td>";
+                                                                }
+                                                            }
+
+                                                        }
+                                                        
+                                                    }
+    
+                                                    //looping ke dua array
+                                                    //pake for 
+                                                    // 
+                                                }
+                                                ?>
+                                                    <td><?= $row['status'] == "1" ? 'Aktif' : 'Not Aktif' ?></td>
+                                                </tr>
+                                                <?php
+                                            }
+
+
+                                            
+                                        ?>
+<?php 
+// $auto_connect = 1; //auto connect database;
+// require_once("config.php");
+require_once("../grafik/lib_db.php");
+// require_once("_/_session.php");
+// require_once("_/_session_level_1.php");
+
+$db = new Second_db();
+// echo "ini draw".$_POST["draw"];
+// $this->load->model("crud_model");  
+$fetch_data = $db->make_datatables();  
+$data = array();  
+foreach($fetch_data as $row)  
+{  
+    $sub_array = array();  
+    $sub_array[] = $row['id'];  
+    $sub_array[] = $row['tgl_transaksi'];  
+    $sub_array[] = $row['kd_produk'];  
+    $sub_array[] = $row['status'];  
+    $sub_array[] = $row['no_tujuan'];  
+    $data[] = $sub_array;  
+}  
+$output = array(  
+    "draw"                    =>     intval($_POST["draw"]),  
+    "recordsTotal"          =>      $db->get_all_data(),  
+    "recordsFiltered"     =>     $db->get_filtered_data(),  
+    "data"                    =>     $data  
+);  
+
+
+if (!$data_kec['error'])
+                                            {
+                                                // echo json_encode($data_kec);
+                                                foreach($data_kec['kecamatans'] as $kecs)
+                                                {
+                                                    if ($data['kecamatan'] == $kecs['id'])
+                                                    {
+                                                        echo "<td>".$kecs['nama']."</td>";
+                                                        
+                                                    }
+                                                }
+                                            }
+                                            else{
+                                                echo "<td>".$data['kecamatan']."</td>";
+                                            }
+
+
+echo json_encode($output);  
+
+?>
