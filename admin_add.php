@@ -22,7 +22,7 @@ if(isset($_REQUEST['act'])){
 	<?PHP require_once("_/header.php"); ?>
 	<?PHP require_once("_/sidebar.php"); ?>
 	
-	<div class="page-content">
+	<div class="page-content" >
 	    <div class="container-fluid">
 	        <div class="row">
 				<div class='col-md-12'>
